@@ -1,0 +1,11 @@
+library(Biostrings) #Laden der Biostrings Library
+
+s1 <- "GAATC" #Sequenz 1 festlegen
+s2 <- "CATAC" #Sequenz 2 festlegen
+
+sigma <- nucleotideSubstitutionMatrix(match = 2, mismatch = -1, baseOnly = TRUE) #"sigma" wird definiert als Nukleotid-Substitutions-Matrix, pro Match wird "2" angegeben, pro Mismatch "-1"
+sigma  #"sigma" ausgeben
+
+alignment <- pairwiseAlignment(s1, s2, substitutionMatrix = sigma, gapOpening = -2, gapExtension = -8, scoreOnly = FALSE) #"alignment" wird definiert als paarweises Alignment, Verglichen werden sollen s1 und s2 und als Matrix wird "sigma" verwendet
+
+alignment #"alignment" wird ausgegeben

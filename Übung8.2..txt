@@ -1,0 +1,24 @@
+library(DECIPHER) #laden der DECIPHER Library
+
+#nutzen der Beispiel Sequenzen vom Tutorial (http://www2.decipher.codes/Documentation/ArtOfAlignmentInR.pdf, Abs. 5.1)
+fas <- system.file("extdata", "50S_ribosomal_protein_L2.fas", package="DECIPHER") #unter "fas" wird fasta Datei mit den Sequenzen eingelesen/definiert
+
+dna <- readDNAStringSet(fas) #Sequenzen aus der Fasta Datei (unter "fas" definiert) laden
+dna #unalignete Sequenzen ausgeben
+
+AA <- AlignTranslation(dna, type="AAStringSet") #alignen der Übersetzung zu Aminosäurensequenzen
+BrowseSeqs(AA, highlight=1) #Zeigen des Alignments (im Browser)
+
+DNA <- AlignSeqs(dna) #alignen der Sequenzen direkt ohne Übersetzung
+DNA <- AlignTranslation(dna) #alignen der Übersetzung, danach Rückübersetzen
+
+#Umschreiben der aligneten Sequenzen in Fasta File
+writeXStringSet(DNA, file="")
+
+u_dna <- unique(dna) #Duplikate verwerfen, in u_dna werden alle Sequenzen nur 1x gesetzt
+
+index <- match(dna, u_dna) # de-replication index erstellt mit den matchenden Sequenzen in "dna" und "u_dna"
+
+U_DNA <- AlignSeqs(u_dna) #alignen der Sequenzen ohne Übersetzung 
+
+DNA <- U_DNA[index]
